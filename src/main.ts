@@ -1,5 +1,6 @@
 const os = require('os');
 const process = require('process');
+const path = require('path');
 
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
@@ -82,6 +83,9 @@ async function run(): Promise<void> {
     }
     args.push(actionInput.command);
     args = args.concat(actionInput.args);
+
+    const matchersPath = path.join(__dirname, '..', '.github');
+    console.log(`##[add-matcher]${path.join(matchersPath, 'rustc.json')}`);
 
     await exec.exec(program, args);
 }
